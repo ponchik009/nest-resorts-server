@@ -6,5 +6,5 @@ export class CreateHotelDto {
   readonly description: string;
   readonly stars: number;
   readonly price: number;
-  readonly tags?: Tag[];
+  readonly tags?: string;
 }

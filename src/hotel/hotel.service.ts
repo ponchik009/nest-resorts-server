@@ -24,6 +24,7 @@ export class HotelService {
     const hotel = this.hotelRepository.create({
       ...dto,
       likes: [],
+      tags: JSON.parse(dto.tags),
       image: imagePath,
     });
 
