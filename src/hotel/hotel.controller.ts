@@ -134,8 +134,13 @@ export class HotelController {
   getAllHotels(
     @Query('filter') filter?: string,
     @Query('query') query: string = '',
+    @Query('cities') cities?: string,
   ): Promise<Hotel[]> {
-    return this.hotelService.getAllHotels(filter && filter.split(','), query);
+    return this.hotelService.getAllHotels(
+      filter && filter.split(','),
+      query,
+      cities && cities.split(','),
+    );
   }
 
   @Get('/tags')

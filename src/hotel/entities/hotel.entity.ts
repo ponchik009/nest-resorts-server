@@ -17,8 +17,8 @@ export class Hotel {
   @Column({ unique: true })
   name: string;
 
-  @Column()
-  country: string;
+  @Column('simple-array')
+  cities: string[];
 
   @Column()
   stars: number;

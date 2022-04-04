@@ -9,6 +9,6 @@ export class Tag {
   @Column()
   name: string;
 
-  @ManyToMany((type) => Hotel, (hotel) => hotel.tags)
+  @ManyToMany((type) => Hotel, (hotel) => hotel.tags, { onDelete: 'CASCADE' })
   hotels: Hotel[];
 }

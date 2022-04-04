@@ -23,6 +23,7 @@ export class HotelService {
     const imagePath = this.fileService.createFile(picture);
     const hotel = this.hotelRepository.create({
       ...dto,
+      cities: JSON.parse(dto.cities),
       likes: [],
       tags: JSON.parse(dto.tags),
       image: imagePath,
@@ -93,22 +94,27 @@ export class HotelService {
     return await this.tagRepository.find();
   }
 
-  async getAllHotels(filter: string[] = [], query: string): Promise<Hotel[]> {
-    // return this.hotelRepository.find({
-    //   relations: ['tags', 'likes'],
-    // });
-
+  async getAllHotels(
+    filter: string[] = [],
+    query: string,
+    cities: string[] = [],
+  ): Promise<Hotel[]> {
     const hotels = await this.hotelRepository
       .createQueryBuilder('hotel')
       .select(['hotel', 'user.username', 'user.id', 'tag.id', 'tag.name'])
       .leftJoin('hotel.likes', 'user')
       .leftJoin('hotel.tags', 'tag')
-      .where('hotel.name like :query', { query: `%${query}%` })
+      .where('hotel.name like :query', {
+        query: `%${query}%`,
+      })
       .getMany();
+
     return hotels.filter((hotel) => {
-      return filter.every((tag) => {
-        return hotel.tags.map((hotelTag) => hotelTag.name).includes(tag);
-      });
+      return (
+        filter.every((tag) => {
+          return hotel.tags.map((hotelTag) => hotelTag.name).includes(tag);
+        }) && cities.every((city) => hotel.cities.includes(city))
+      );
     });
   }
 
