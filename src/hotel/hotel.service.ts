@@ -49,8 +49,8 @@ export class HotelService {
     // });
 
     const hotel = this.hotelRepository.create({
-      id: Number(id),
       ...dto,
+      id: Number(id),
     });
 
     if (picture) {
