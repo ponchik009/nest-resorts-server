@@ -113,7 +113,8 @@ export class HotelService {
       return (
         filter.every((tag) => {
           return hotel.tags.map((hotelTag) => hotelTag.name).includes(tag);
-        }) && cities.every((city) => hotel.cities.includes(city))
+        }) &&
+        (!cities.length || cities.some((city) => hotel.cities.includes(city)))
       );
     });
   }
